@@ -3,18 +3,39 @@
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label>Username</label>
-      <input formControlName="userName" type="text" class="form-control">
+      <input formControlName="userName" [class.is-invalid]="UserName.invalid && UserName.touched" type="text" class="form-control">
+    </div>
+    <div *ngIf="UserName.invalid && UserName.touched">
+      <small *ngIf="UserName.errors?.required" class="text-danger">User Name is required</small>
+      <small *ngIf="UserName.errors?.minlength" class="text-danger">User Name cannot be less than 3 characters</small>
+      <small *ngIf="UserName.errors?.forbiddenName" class="text-danger">User Name cannot contain admin</small>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input formControlName="password" type="password" class="form-control">
+      <input formControlName="password" [class.is-invalid]="registrationForm.errors?.misMatch" type="password" class="form-control">
     </div>
+    <small *ngIf="registrationForm.errors?.misMatch" class="text-danger">Password does not match</small>
     <div class="form-group">
       <label>Confirm Password</label>
-      <input formControlName="confirmPassword" type="password" class="form-control">
+      <input formControlName="confirmPassword" [class.is-invalid]="registrationForm.errors?.misMatch" type="password" class="form-control">
+    </div>
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" formControlName="city" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" formControlName="state" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" formControlName="code" class="form-control">
+      </div>
     </div>
 
     <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn btn-primary" (click)="loadApiData()">Load-Api-Data</button>
 
     {{registrationForm.value | json}}
   </form>
