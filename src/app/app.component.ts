@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup,FormBuilder, Validators, FormArray } from '@angular/forms';
 import { forbiddenFunctionName } from './shared/userValidator';
 import { passWordValidator } from './shared/passwordValidator';
 
@@ -15,6 +15,16 @@ export class AppComponent {
     return this.registrationForm.get('userName');
   }
 
+  get AlternateEmails()
+  {
+    return this.registrationForm.get('alternateEmail') as FormArray;
+  }
+
+  addAlternateEmails()
+  {
+    return this.AlternateEmails.push(this.fb.control(''));
+  }
+
   constructor(private fb: FormBuilder){}
 
   registrationForm= this.fb.group({
@@ -25,7 +35,8 @@ export class AppComponent {
       city:[''],
       state:[''],
       code:['']
-    })
+    }),
+    alternateEmail: this.fb.array([])
   },{validator: passWordValidator});
   /*registrationForm= new FormGroup(
     {

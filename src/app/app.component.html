@@ -19,6 +19,10 @@
       <label>Confirm Password</label>
       <input formControlName="confirmPassword" [class.is-invalid]="registrationForm.errors?.misMatch" type="password" class="form-control">
     </div>
+    <button class="btn btn-secondary" (click)="addAlternateEmails()">Add Email</button>
+    <div [formArrayName]="AlternateEmails" *ngFor="let email of AlternateEmails.controls; let index=i">
+      <input type="text" [formControlName]="i">
+    </div>
     <div formGroupName="address">
       <div class="form-group">
         <label>City</label>
